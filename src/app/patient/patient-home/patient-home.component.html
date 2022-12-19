@@ -1,0 +1,205 @@
+<div class="container p-3 font-monospace mt-5 w-100 ">
+
+  <!--&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+  <div class="d-flex justify-content-between py-4">
+    <button class="btn btn-success">Search Doctors 🩺</button>
+    <button class="btn btn-primary">Add Member ➕</button>
+  </div>
+  <!--    &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+
+
+  <div class="d-flex w-100 justify-content-between ">
+
+    <div class="w-50">
+      <!--      -->
+      <div class="p-2">
+        <span>Linked Accounts </span>
+        <hr>
+      </div>
+      <!---->
+      <div class="accordion accordion-flush " id="accordionExample">
+        <div class="accordion-item" *ngFor="let datum of patients | paginate:{ itemsPerPage: 2, currentPage: page  } ;let
+               i = index">
+          <div class="accordion-header" id="headingOne">
+
+
+            <button (click)="viewConsultations(datum.patientId);viewBookings(datum.patientId)"
+                    class="accordion-button  text-black"
+                    type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#w'+i" aria-expanded="true"
+                    [attr.aria-controls]="'w'+i">
+              {{datum.firstName}} {{datum.lastName}}
+            </button>
+          </div>
+          <div id="{{'w'+i}}" class="accordion-collapse collapse " aria-labelledby="headingOne"
+               data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              <table class="table table-hover">
+                <tbody>
+                <tr>
+                  <td class="table-text">Patient Id</td>
+                  <td>:</td>
+                  <td>{{datum.patientId}}</td>
+                  <td class="table-text">Gender</td>
+                  <td>:</td>
+                  <td>{{datum.gender}}</td>
+                </tr>
+                <tr>
+                  <td class="table-text">Blood Group</td>
+                  <td>:</td>
+                  <td>{{datum.bloodGroup}}</td>
+                  <td class="table-text">Relation</td>
+                  <td>:</td>
+                  <td>{{datum.relation}}</td>
+                </tr>
+                <tr>
+                  <td class="table-text">Date Of Birth</td>
+                  <td>:</td>
+                  <td>{{datum.dob}}</td>
+                  <td class="table-text">Place</td>
+                  <td>:</td>
+                  <td>{{datum.place}}</td>
+                </tr>
+                <tr>
+                  <td class="table-text">UID</td>
+                  <td>:</td>
+                  <td>{{datum.emergencyContactNumber}}</td>
+                  <td class="table-text">Linked Account Number</td>
+                  <td>:</td>
+                  <td>{{datum.patientPhoneNumber}}</td>
+                </tr>
+                </tbody>
+
+
+              </table>
+              <div class="d-flex justify-content-end bg-light p-2 rounded-2">
+                <button class="btn btn-outline-primary" type="button"  [routerLink]="['book']"
+                        [queryParams]="{patientId:datum.patientId}"
+                >Book an
+                  appointment</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--      -->
+      <div class="pt-3 d-flex justify-content-end">
+        <pagination-controls (pageChange)="page = $event"></pagination-controls>
+      </div>
+    </div>
+    <!--      -->
+
+    <div style="width: 1px;background: black"></div>
+
+    <!--    &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+    <div class=" p-3 " style="width: fit-content">
+
+      <span>Consultations</span>
+      <hr>
+
+      <!--      -->
+      <div>
+
+        <div>
+
+
+          <div class="accordion accordion-flush">
+            <div class="accordion-item" *ngFor="let datum of consulations | paginate:{ itemsPerPage: 2, currentPage: page  } ;let
+               i = index">
+              <div class="accordion-header">
+                <button class="accordion-button  text-black" type="button" data-bs-toggle="collapse"
+                        [attr.data-bs-target]="'#x'+i" aria-expanded="true" [attr.aria-controls]="'x'+i">
+                  <span class="text-secondary px-3">{{datum.date}} </span>
+                  <span class="text-info px-3">Dr.{{datum.doctors.firstName}}
+                    {{datum.doctors.lastName}}</span>
+                </button>
+              </div>
+              <div id="{{'x'+i}}" class="accordion-collapse collapse " aria-labelledby="headingOne"
+                   data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <div>
+                    <div class="py-2">
+                      <h4>{{datum.diagnosis}}</h4>
+                    </div>
+
+                    <table class="table">
+                      <thead>
+                      <tr>
+                        <th>Medicine</th>
+                        <th>Number of tablets</th>
+                        <th>frequency</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr *ngFor="let i of datum.medications.split(';') ">
+                        <td>{{i.split(':')[0]}}</td>
+                        <td>{{i.split(':')[1]}}</td>
+                        <td>{{i.split(':')[2]}}</td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-3 d-flex justify-content-end">
+            <pagination-controls (pageChange)="page = $event"></pagination-controls>
+          </div>
+
+        </div>
+        <!--      -->
+
+      </div>
+
+      <!--    -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+    </div>
+
+  </div>
+
+  <!--  -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+  <div style="height:1px;background: black  "></div>
+  <!--  -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+
+
+  <div class="d-flex">
+
+    <div>
+
+      <h6 class="py-2">Your Bookings</h6>
+      <table class="table table-hover">
+        <tr class="table-group-divider">
+          <th>Date</th>
+          <th>Doctor name</th>
+          <th>Session</th>
+          <th>Consultation mode</th>
+          <th>Consultation fee</th>
+        </tr>
+        <tbody>
+        <tr *ngFor="let datum of Bookings">
+          <td>{{datum.date.split('T')[0]}}</td>
+          <td>Dr.{{datum.doctors.firstName}} {{datum.doctors.lastName}}</td>
+          <td>{{datum.session}}</td>
+          <td>{{datum.consultationMode}}</td>
+          <td>{{datum.consultationFee}}</td>
+        </tr>
+        </tbody>
+      </table>
+
+
+    </div>
+
+
+
+
+
+
+    <!--    &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+    <div></div>
+
+  </div>
+
+
+</div>
