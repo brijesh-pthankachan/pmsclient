@@ -2,22 +2,23 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import {Observable} from "rxjs";
 
-@Injectable ( {
-  providedIn : 'root'
-} )
+@Injectable({
+  providedIn: 'root'
+})
 export class PatientService {
+
+  constructor(private http: HttpClient) {
+
+  }
+
   postBooking(data: any) {
     return this.http.post("https://localhost:7296/api/PatientService/BookAppointment", data);
-
   }
 
-  constructor ( private http : HttpClient ) {
-
-  }
 
   getBookings(patientId: string) {
 
-    return this.http.get<Array<object>> ( 'https://localhost:7296/api/PatientService/GetPendingAppointments/'+patientId);
+    return this.http.get<Array<object>>('https://localhost:7296/api/PatientService/GetPendingAppointments/' + patientId);
 
   }
 
@@ -45,4 +46,6 @@ export class PatientService {
   getPatientById(patientId:string){
     return this.http.get<Array<object>> ( 'https://localhost:7296/api/Patient/'+patientId);
   }
+
+
 }

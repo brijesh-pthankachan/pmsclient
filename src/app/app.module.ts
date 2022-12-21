@@ -11,6 +11,7 @@ import {AdminModule} from "./admin/admin.module";
 import {DoctorModule} from "./doctor/doctor.module";
 import {NgxPaginationModule} from "ngx-pagination";
 import {FormsModule} from "@angular/forms";
+import {PharmacyModule} from "./pharmacy/pharmacy.module";
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import {FormsModule} from "@angular/forms";
     AdminModule,
     DoctorModule,
     NgxPaginationModule,
-    FormsModule
+    FormsModule,
+    PharmacyModule
   ],
   providers: [],
   bootstrap: [AppComponent]
