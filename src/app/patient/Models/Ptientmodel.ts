@@ -18,38 +18,38 @@ export class Patient {
 }
 
 
-export class Doctors{
+export class Doctors {
 
-  availability! : string
-  dob! : string
-  doctorId! : string
-  doctorPhoneNumber! : string
-  experience! : string
-  firstName! : string
-  gender! : string
-  id! : string
-  lastName! : string
-  qualification! : string
-  rating! : string
-  userId!:null
+  availability!: string;
+  dob!: string;
+  doctorId!: string;
+  doctorPhoneNumber!: string;
+  experience!: string;
+  firstName!: string;
+  gender!: string;
+  id!: string
+  lastName!: string
+  qualification!: string
+  rating!: string
+  userId!: null
 }
 
-export class ConsultationDetails{
+export class ConsultationDetails {
 
-  appointmentId!:string
-  consultationFee!:string
-  consultationMode!:string
-  date!:string
-  diagnosis!:string
-  doctorId!:string
-  doctors!:Doctors
-  labTest!:string
-  medications!:string
-  patientId!:string
-  patients!:null
-  radiology!:string
-  remarks!:string
-  session!:string
-  status!:string
+  appointmentId!: string;
+  consultationFee!: string;
+  consultationMode!: string;
+  date!: string;
+  diagnosis!: string;
+  doctorId!: string;
+  doctors!: Doctors;
+  patients!: Patient;
+  labTest!: string;
+  medications!: string;
+  patientId!: string;
+  radiology!: string;
+  remarks!: string;
+  session!: string;
+  status!: string;
 
 }

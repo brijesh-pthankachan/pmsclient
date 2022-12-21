@@ -7,13 +7,15 @@ import {NgxPaginationModule} from "ngx-pagination";
 import { PatientHomeComponent } from './patient-home/patient-home.component';
 import {BookappointmentComponent} from "./book-appointment/book-ppointment.component";
 import {FormsModule} from "@angular/forms";
+import {FormComponent} from './form/form.component';
 
 
 @NgModule({
   declarations: [
     HomepageComponent,
     PatientHomeComponent,
-    BookappointmentComponent
+    BookappointmentComponent,
+    FormComponent
   ],
   imports: [
     CommonModule,
