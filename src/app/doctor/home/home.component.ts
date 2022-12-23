@@ -3,12 +3,14 @@ import {DoctorService} from "./doctor.service";
 import {ConsultationDetails, Patient} from "../../patient/Models/Ptientmodel";
 import {PatientService} from "../../patient/patient.service";
 import {NgForm} from '@angular/forms';
+import {AuthServiceService} from "../../auth/auth-service.service";
+import {Router} from "@angular/router";
 
 
 @Component({
-  selector: 'doctor-home',
+  selector: 'doctor-admin-home',
   templateUrl: './home.component.html',
-  // styleUrls: ['./home.component.css']
+  // styleUrls: ['./admin-admin-home.component.css']
 })
 export class HomeComponent implements OnInit {
 
@@ -16,31 +18,50 @@ export class HomeComponent implements OnInit {
   items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
   pendingAppointments: Array<ConsultationDetails> = [];
   parkedPatients: Array<ConsultationDetails> = [];
-
   completedConsultations: Array<ConsultationDetails> = [];
   patientConsultationDetails: Array<ConsultationDetails> = [];
   isClickedConsultButton: boolean = false;
   patient: Patient = new Patient();
   patientage!: number;
-
   elements: Array<number> = [1];
   appointmentId!: string;
 
-  constructor(private doctorService: DoctorService, private patientService: PatientService) {
+
+// -----------------------------------------------------------------------------------------------------------------------------------------------
+
+  constructor(private doctorService: DoctorService, private patientService: PatientService, private auth: AuthServiceService, private route: Router) {
   }
 
+// -----------------------------------------------------------------------------------------------------------------------------------------------
 
-  add() {
-    this.elements.push(1);
+
+  ngOnInit() {
+
+    this.parkedPatients = [];
+    this.getCompletedBookings();
+    this.getPendingBookings();
+    this.getParkedPatients();
+
   }
 
-  // @ViewChild('container', {static: true})
-  // container!: HTMLElement;
+  // -----------------------------------------------------------------------------------------------------------------------------------------------
 
 
-  pendingBookings() {
+  private getParkedPatients() {
+    this.doctorService.getParkedPatientsOfDoctor().subscribe(data => {
+      for (const datum of data) {
+        this.parkedPatients.push(JSON.parse(JSON.stringify(datum)));
+      }
+      console.log(this.parkedPatients);
+    });
+  }
+
+// -----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+  getPendingBookings() {
     this.pendingAppointments = [];
-    this.doctorService.getPendingBookingsOfDoctor().subscribe(data => {
+    this.doctorService.getPendingBookingsOfDoctor(this.auth.getUserinfo().UUID).subscribe(data => {
       for (let datum of data) {
         let ob: ConsultationDetails = JSON.parse(JSON.stringify(datum));
         this.pendingAppointments.push(ob)
@@ -50,10 +71,13 @@ export class HomeComponent implements OnInit {
   }
 
 
-  completedBookings() {
+// -----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+  getCompletedBookings() {
     this.completedConsultations = [];
 
-    this.doctorService.getCompletedConsultationsOfDoctor().subscribe(data => {
+    this.doctorService.getCompletedConsultationsOfDoctor(this.auth.getUserinfo().UUID).subscribe(data => {
       for (const datum of data) {
         this.completedConsultations.push(JSON.parse(JSON.stringify(datum)));
       }
@@ -61,22 +85,8 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+// -----------------------------------------------------------------------------------------------------------------------------------------------
 
-    this.parkedPatients = [];
-    this.completedBookings();
-    this.pendingBookings();
-
-
-    this.doctorService.getParkedPatientsOfDoctor().subscribe(data => {
-      for (const datum of data) {
-        this.parkedPatients.push(JSON.parse(JSON.stringify(datum)));
-      }
-      console.log(this.parkedPatients);
-    });
-
-
-  }
 
   handleConsultation(appointmentId: string, doctorId: string, patientId: string) {
 
@@ -97,21 +107,9 @@ export class HomeComponent implements OnInit {
 
   }
 
-  getDate(dob: string) {
-    this.patientage = new Date().getFullYear() - parseInt(dob.split('T')[0].split('-')[0]);
-    console.log(this.patientage);
-  }
+// -----------------------------------------------------------------------------------------------------------------------------------------------
 
-
-  remove() {
-    this.elements.pop();
-  }
-
-  submit() {
-    this.isClickedConsultButton = false;
-  }
-
-  handleSubmit(form: NgForm) {
+  handleInvoiceSubmit(form: NgForm) {
 
     let medicines: Array<string> = [];
     let frequency: Array<string> = [];
@@ -146,19 +144,36 @@ export class HomeComponent implements OnInit {
     console.log(ob);
     this.doctorService.putDiagnostics(ob).subscribe(data => {
       console.log(data);
-      this.pendingBookings();
-      this.completedBookings();
+      this.getPendingBookings();
+      this.getCompletedBookings();
       this.isClickedConsultButton = false;
 
     });
   }
 
 
-  // onTableDataChange(event: any) {
-  //   this.page = event;
-  // }
-  // onTableSizeChange(event: any): void {
-  //   this.tableSize = event.target.value;
-  //   this.page = 1;
-  // }
+  // -----------------------------------------------------------------------------------------------------------------------------------------------
+
+  getDate(dob: string) {
+    this.patientage = new Date().getFullYear() - parseInt(dob.split('T')[0].split('-')[0]);
+    console.log(this.patientage);
+  }
+
+  add() {
+    this.elements.push(1);
+  }
+
+  remove() {
+    this.elements.pop();
+  }
+
+
+  logout() {
+    localStorage.clear();
+    this.route.navigate(['/']);
+  }
+
+  // -----------------------------------------------------------------------------------------------------------------------------------------------
+
+
 }

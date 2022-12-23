@@ -17,6 +17,9 @@ export class Patient {
 
 }
 
+export class Message {
+  message!: string
+}
 
 export class Doctors {
 
@@ -27,11 +30,13 @@ export class Doctors {
   experience!: string;
   firstName!: string;
   gender!: string;
-  id!: string
-  lastName!: string
-  qualification!: string
-  rating!: string
-  userId!: null
+  id!: string;
+  lastName!: string;
+  qualification!: string;
+  rating!: string;
+  specilaization!: string;
+  userId!: string;
+
 }
 
 export class ConsultationDetails {
@@ -52,4 +57,15 @@ export class ConsultationDetails {
   session!: string;
   status!: string;
 
+}
+
+export class Jwt {
+  Date!: string;
+  UUID!: string;
+  email!: string;
+  exp!: string;
+  role!: string;
+  'iss': string;
+  jti!: string;
+  sid!: string;
 }

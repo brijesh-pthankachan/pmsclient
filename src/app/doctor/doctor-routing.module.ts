@@ -1,9 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
+import {HomeComponent} from './home/home.component';
+import {RoleGuard} from "../helpers/roleGuard";
 
 const routes: Routes = [
-  {path: 'doctor', component: HomeComponent}
+  {
+    path: 'doctor/home',
+    component: HomeComponent,
+    canActivate: [RoleGuard],
+    data: {expectedRole: 'Doctor'}
+  }
 ];
 
 @NgModule({

@@ -10,8 +10,8 @@ export class DoctorService {
   }
 
 
-  getPendingBookingsOfDoctor() {
-    return this.http.get<Array<object>>('https://localhost:7296/api/DoctorService/GetPendingAppointments/2');
+  getPendingBookingsOfDoctor(docid: string) {
+    return this.http.get<Array<object>>('https://localhost:7296/api/DoctorService/GetPendingAppointments/' + docid);
   }
 
 
@@ -19,8 +19,8 @@ export class DoctorService {
     return this.http.get<any>('https://localhost:7296/api/DoctorService/GetParkedAppointments/2');
   }
 
-  getCompletedConsultationsOfDoctor() {
-    return this.http.get<any>('https://localhost:7296/api/Pharmacy/GetCompletedAppointments/2');
+  getCompletedConsultationsOfDoctor(docid: string) {
+    return this.http.get<any>('https://localhost:7296/api/Pharmacy/GetCompletedAppointments/' + docid);
   }
 
   putDiagnostics(model: any) {

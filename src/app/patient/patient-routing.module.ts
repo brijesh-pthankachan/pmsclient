@@ -1,13 +1,23 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import {HomepageComponent} from "./homepage/homepage.component";
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 import {BookappointmentComponent} from "./book-appointment/book-ppointment.component";
-import {FormComponent} from "./form/form.component";
+import {PatientHomeComponent} from "./patient-home/patient-home.component";
+import {SearchDoctorComponent} from "./search-doctor/search-doctor.component";
+import {RoleGuard} from "../helpers/roleGuard";
 
 const routes: Routes = [
-  {path: 'patient', component: HomepageComponent},
-  {path: 'patient/book', component: BookappointmentComponent},
-  {path: 'test', component: FormComponent}
+  {
+    path: 'User/home', component: PatientHomeComponent, canActivate: [RoleGuard],
+    data: {expectedRole: 'User'}
+  },
+  {
+    path: 'User/home/book', component: BookappointmentComponent, canActivate: [RoleGuard],
+    data: {expectedRole: 'User'}
+  },
+  {
+    path: 'User/home/search', component: SearchDoctorComponent, canActivate: [RoleGuard],
+    data: {expectedRole: 'User'}
+  }
 ];
 
 @NgModule({

@@ -1,17 +1,19 @@
-import { Component , OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { ActivatedRoute } from "@angular/router";
+import {Component, OnInit} from '@angular/core';
+import {NgForm} from '@angular/forms';
+import {ActivatedRoute} from "@angular/router";
 import {ConsultationDetails, Doctors, Patient} from "../Models/Ptientmodel";
-import { PatientService } from "../patient.service";
+import {PatientService} from "../patient.service";
+import {Location} from "@angular/common";
+import {ToastrService} from "ngx-toastr";
 
-@Component ( {
-               selector : 'patient-book-appointment' ,
-               templateUrl : './book-ppointment.component.html' ,
-               styleUrls : [ './book-ppointment.component.css' ]
-             } )
+@Component({
+  selector: 'patient-book-appointment',
+  templateUrl: './book-ppointment.component.html',
+  styleUrls: ['./book-ppointment.component.css']
+})
 export class BookappointmentComponent implements OnInit {
 
-  constructor ( private route : ActivatedRoute , private patientService : PatientService ) {
+  constructor(private route: ActivatedRoute, private patientService: PatientService, private location: Location, private tost: ToastrService) {
 
   }
 
@@ -59,11 +61,27 @@ export class BookappointmentComponent implements OnInit {
 
 
   handlePayment(form: NgForm) {
-    const data = {...form.value, patientId: this.PatientId,doctorId:this.DoctorID,ConsultationFee:210,Status:""}
-    this.patientService.postBooking(data).subscribe(data=>{
+    const data = {...form.value, patientId: this.PatientId, doctorId: this.DoctorID, ConsultationFee: 210, Status: ""}
+    this.patientService.postBooking(data).subscribe(data => {
       console.log(data);
-      this.appointmentFlag=0;
+      this.appointmentFlag = 0;
+      this.tost.success("Booking Success");
     });
 
+  }
+
+  filteText: string = ""
+
+  filter() {
+    this.filteText = (document.getElementById("filterText") as HTMLInputElement).value;
+
+  }
+
+  goHome() {
+    this.location.back();
+  }
+
+  goBack() {
+    this.appointmentFlag = 0;
   }
 }

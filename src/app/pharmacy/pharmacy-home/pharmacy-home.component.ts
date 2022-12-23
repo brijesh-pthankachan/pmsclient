@@ -3,7 +3,7 @@ import {PharmacyService} from "../pharmacy.service";
 import {ConsultationDetails} from "../../patient/Models/Ptientmodel";
 
 @Component({
-  selector: 'app-pharmacy-home',
+  selector: 'app-pharmacy-admin-home',
   templateUrl: './pharmacy-home.component.html',
 })
 export class PharmacyHomeComponent implements OnInit {
@@ -15,9 +15,11 @@ export class PharmacyHomeComponent implements OnInit {
   total: number = 0;
   currentUser: ConsultationDetails = new ConsultationDetails();
   hider: boolean = true;
+  billhider: number = 0;
 
   getPrescriptions(consult: ConsultationDetails) {
 
+    this.billhider = 1;
     this.currentUser = consult;
     this.medicines = consult.medications;
     console.log(consult.medications);
@@ -75,6 +77,7 @@ export class PharmacyHomeComponent implements OnInit {
       console.log(data);
       this.getPaymentPendingAppointments();
       this.hider = true;
+      this.billhider = 0;
     });
 
 
