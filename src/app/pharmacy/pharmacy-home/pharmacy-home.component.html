@@ -9,14 +9,14 @@
         <a class="nav-link active" data-bs-toggle="tab" href="#home" aria-selected="true" role="tab">Pending
           Payments</a>
       </li>
-      <li class="nav-item" role="presentation">
-        <a class="nav-link" data-bs-toggle="tab" href="#profile" aria-selected="false" tabindex="-1" role="tab">Billed
-          Payments</a>
-      </li>
+      <!--      <li class="nav-item" role="presentation">-->
+      <!--        <a class="nav-link" data-bs-toggle="tab" href="#profile" aria-selected="false" tabindex="-1" role="tab">Billed-->
+      <!--          Payments</a>-->
+      <!--      </li>-->
     </ul>
 
 
-    <div id="myTabContent" class="tab-content">
+    <div id="myTabContent" class="tab-content" *ngIf="paymentPendingAppointments.length>0">
 
 
       <div class="tab-pane fade show active" id="home" role="tabpanel">
@@ -59,7 +59,7 @@
 
 
     <!--  div for viewing prescriptions-->
-    <div>
+    <div *ngIf="paymentPendingAppointments.length>0 && billhider==1">
 
       <form #form="ngForm" (ngSubmit)="billing(form)">
 
@@ -77,13 +77,13 @@
             <td>{{m.split(':')[0]}}</td>
             <td>{{m.split(':')[1]}}</td>
             <td>{{m.split(':')[2]}}</td>
-            <td><input ngModel #mb="ngModel" name="mb{{i}}" type="number" class="btn btn-light"
+            <td><input ngModel required #mb="ngModel" name="mb{{i}}" type="number" class="btn btn-light"
                        placeholder="Amount ₹"></td>
           </tr>
           </tbody>
         </table>
         <div class="mt-3 d-flex justify-content-end">
-          <button type="submit" class="btn btn-success">Generate Bill 🗒️</button>
+          <button [disabled]="form.invalid" type="submit" class="btn btn-success">Generate Bill 🗒️</button>
         </div>
       </form>
 

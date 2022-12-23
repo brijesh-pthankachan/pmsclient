@@ -1,7 +1,11 @@
 <div class="container font-monospace mt-5">
 
-
   <div>
+    <button class="btn btn-secondary my-4" (click)="goHome();">Home</button>
+  </div>
+
+  <div *ngIf="appointmentFlag==0">
+
 
     <table class="table">
       <thead>
@@ -19,7 +23,7 @@
 
       <tr *ngFor="let i of doctors | paginate:{ itemsPerPage: 5, currentPage: page  }">
         <td>Dr.{{i.firstName}} {{i.lastName}}</td>
-        <td>{{i.qualification}}</td>
+        <td>{{i.specilaization}}</td>
         <td>{{i.experience}}</td>
         <td>{{i.gender}}</td>
         <td>
@@ -52,22 +56,22 @@
              class="form-control py-2 my-2">
 
 
-
-
-      <select ngModel #session="ngModel" name="Session" class="form-select" >
+      <select ngModel required #session="ngModel" name="Session" class="form-select">
         <option value="morning">Morning</option>
         <option value="Evening">Evening</option>
         <option value="Afternoon">Afternoon</option>
       </select>
 
-      <input ngModel #date="ngModel" name="Date" type="date" placeholder="Date"
+
+      <input ngModel required #date="ngModel" name="Date" type="date" placeholder="Date"
              class="form-control py-2 my-2">
 
-      <select ngModel #consultationMode="ngModel" class="form-select" name="ConsultationMode">
+      <select ngModel required #consultationMode="ngModel" class="form-select" name="ConsultationMode">
         <option value="Online">Online</option>
         <option value="Direct">Direct</option>
       </select>
 
+      <span *ngIf="form.invalid" class="text-danger">all fields are required</span>
       <hr>
       <div class="d-flex justify-content-between">
         <h6> Amount to pay</h6>
@@ -83,8 +87,9 @@
 
       </div>
       <hr>
-      <div class="d-flex justify-content-end">
-        <button type="submit" class="btn btn btn-success">Pay Now</button>
+      <div class="d-flex justify-content-between">
+        <button type="button" (click)="goBack();" class="btn btn btn-secondary">Go Back</button>
+        <button [disabled]="form.invalid" type="submit" class="btn btn btn-success">Pay Now</button>
       </div>
     </form>
   </div>

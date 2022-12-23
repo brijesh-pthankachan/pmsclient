@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import {Observable} from "rxjs";
+import {ConsultationDetails, Doctors, Patient} from "./Models/Ptientmodel";
 
 @Injectable({
   providedIn: 'root'
@@ -22,30 +23,39 @@ export class PatientService {
 
   }
 
-  getCompletedConsultations(patientId:string){
-    return this.http.get<Array<object>> ( 'https://localhost:7296/api/PatientService/GetConsultationDetails/'+patientId);
+  getCompletedConsultations(patientId: string) {
+    return this.http.get<Array<object>>('https://localhost:7296/api/PatientService/GetConsultationDetails/' + patientId);
 
   }
 
-  getLinkedAccounts ( ):Observable<Array<object>> {
-    return this.http.get<Array<object>> ( 'https://localhost:7296/api/PatientService/GetLinkedAccounts/c49e6d46-3ed9-4250-92c7-fb1f015e68c2');
+  getLinkedAccounts(sid: string) {
+    console.log(sid);
+    return this.http.get<Array<object>>('https://localhost:7296/api/PatientService/GetLinkedAccounts/' + sid);
   }
 
-  getLinkedAccountDetails () {
+  getLinkedAccountDetails() {
 
   }
 
   getDoctors() {
-    return this.http.get<Array<object>> ( 'https://localhost:7296/api/Doctor');
+    return this.http.get<Array<Doctors>>('https://localhost:7296/api/Doctor');
   }
 
-  getDoctorById(doctorId:string){
-    return this.http.get<Array<object>> ( 'https://localhost:7296/api/Doctor/'+doctorId);
+  getDoctorById(doctorId: string) {
+    return this.http.get<Array<object>>('https://localhost:7296/api/Doctor/' + doctorId);
   }
 
-  getPatientById(patientId:string){
-    return this.http.get<Array<object>> ( 'https://localhost:7296/api/Patient/'+patientId);
+  getPatientById(patientId: string) {
+    return this.http.get<Array<object>>('https://localhost:7296/api/Patient/' + patientId);
   }
 
+
+  getAllPatients() {
+    return this.http.get<Array<Patient>>('https://localhost:7296/api/Patient');
+  }
+
+  getAllConsultationDetails() {
+    return this.http.get<Array<ConsultationDetails>>('https://localhost:7296/api/Admin/GetAllAppointments');
+  }
 
 }

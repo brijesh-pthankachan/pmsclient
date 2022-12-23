@@ -11,16 +11,19 @@
              role="tab">Pending
             Appointments</a>
         </li>
-        <li class="nav-item" role="presentation">
-          <a class="nav-link" data-bs-toggle="tab" href="#parked" aria-selected="false" role="tab"
-             tabindex="-1">Parked
-            Patients
-          </a>
-        </li>
+        <!--        <li class="nav-item" role="presentation">-->
+        <!--          <a class="nav-link" data-bs-toggle="tab" href="#parked" aria-selected="false" role="tab"-->
+        <!--             tabindex="-1">Parked-->
+        <!--            Patients-->
+        <!--          </a>-->
+        <!--        </li>-->
         <li class="nav-item" role="presentation">
           <a class="nav-link" data-bs-toggle="tab" href="#completed" aria-selected="false" role="tab"
              tabindex="-1">
             Completed Consultations </a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link btn btn-danger" (click)="logout();" style="color: red">Logout</button>
         </li>
       </ul>
     </div>
@@ -108,7 +111,6 @@
                 <button class="btn btn-success" type="button">Consult</button>
               </td>
             </tr>
-
 
             </tbody>
           </table>
@@ -250,7 +252,7 @@
       <!--      right div-->
       <div>
 
-        <form #form="ngForm" (ngSubmit)="handleSubmit(form)">
+        <form #form="ngForm" (ngSubmit)="handleInvoiceSubmit(form)">
 
           <div>
             <textarea ngModel #diagnosis="ngModel" name="email" class="form-control" cols="30" rows="5"
